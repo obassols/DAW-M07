@@ -5,7 +5,10 @@ var_dump($test_array);
 echo "<br>";
 var_dump(factorialArray($test_array));
 
-function factorialArray( array $array ): bool | array  {
+function factorialArray( $array ): bool | array  {
+    if (is_array($array)) {
+        return false;
+    }
     $factorial_array = array();
 
     foreach($array as $number) {
