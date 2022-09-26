@@ -6,7 +6,7 @@ echo "<br>";
 var_dump(factorialArray($test_array));
 
 function factorialArray( $array ): bool | array  {
-    if (is_array($array)) {
+    if (!is_array($array)) {
         return false;
     }
     $factorial_array = array();
@@ -14,7 +14,7 @@ function factorialArray( $array ): bool | array  {
     foreach($array as $number) {
         // Comprova que el $number sigui un numero o si es un numero negatiu
         if (is_int($number) && $number > -1) {
-            array_push($factorial_array, factorialNombre($number));
+            $factorial_array[] = factorialNombre($number);
         } else {
             return false;
         }
