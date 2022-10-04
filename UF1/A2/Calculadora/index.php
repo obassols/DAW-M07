@@ -36,6 +36,11 @@
     </div>
     <?php
     $result = 0;
+    /**
+     * Agafa l'input que has fet submit, calcula el que ha de fer i et retorna el resultat.
+     * @author Oriol_Bassols
+     * @return string Retorna un string amb numeros, operacions, ERROR o INF.
+     */
     function showCalc() {
         global $result;
         if ($_POST["value"] == 'C') {
