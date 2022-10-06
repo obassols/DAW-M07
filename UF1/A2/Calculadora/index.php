@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Calculadora</title>
 </head>
+<?php $result = 0; ?>
 <body>
     <div class="container">
         <form action="" method="post" name="calc" class="calculator">
@@ -35,7 +36,6 @@
         </form>
     </div>
     <?php
-    $result = 0;
     /**
      * Agafa l'input que has fet submit, calcula el que ha de fer i et retorna el resultat.
      * @author Oriol_Bassols
@@ -43,33 +43,37 @@
      */
     function showCalc() {
         global $result;
-        if ($_POST["value"] == 'C') {
-            $answer = "";
-        } elseif ($_POST["value"] == 'SIN' || $_POST["value"] == "COS") {
-            $answer = $_POST["value"] . "(" . $_POST["total_value"] . ")";
-        } elseif ($_POST["value"] == '=') {
-            $operation = $_POST['total_value'];
-            $regex = "/^[0-9()+\-\*(SIN)(COS)\.\/]+$/";
-            if (preg_match($regex,$operation)) {
-                try {
-                    eval("\$answer = $operation;");
-                    $answer = round($answer, 4);
-                    $result = 1;
-                } catch (DivisonByZeroError $e) {
-                    $answer = "INF";
-                } catch (Error $e) {
+        if(isset($_POST["value"]) && isset($_POST["total_value"])) {
+            if ($_POST["value"] == 'C') {
+                $answer = "";
+            } elseif ($_POST["value"] == 'SIN' || $_POST["value"] == "COS") {
+                $answer = $_POST["value"] . "(" . $_POST["total_value"] . ")";
+            } elseif ($_POST["value"] == '=') {
+                $operation = $_POST['total_value'];
+                $regex = "/^[0-9()+\-\*(SIN)(COS)\.\/]+$/";
+                if (preg_match($regex,$operation)) {
+                    try {
+                        eval("\$answer = $operation;");
+                        $answer = round($answer, 4);
+                        $result = 1;
+                    } catch (DivisionByZeroError $e) {
+                        $answer = "INF";
+                    } catch (Error $e) {
+                        $answer = "ERROR";
+                    }
+                } else {
                     $answer = "ERROR";
                 }
             } else {
-                $answer = "ERROR";
+                if ($_POST["result"] == 1) {
+                    $answer = $_POST["value"];
+                    $result = 0;
+                } else {
+                    $answer = $_POST["total_value"] . $_POST["value"];
+                }
             }
         } else {
-            if ($_POST["result"] == 1) {
-                $answer = $_POST["value"];
-                $result = 0;
-            } else {
-                $answer = $_POST["total_value"] . $_POST["value"];
-            }
+            $answer = "";
         }
         return $answer;
     }
