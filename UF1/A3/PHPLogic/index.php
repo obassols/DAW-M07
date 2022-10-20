@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     function printLetters(): string {
         if (!isset($_SESSION['letters']) || !isset($_SESSION['date']) || $_SESSION['date'] != $_SESSION['last-date']) generateLetters();
         $letters_html = "";
@@ -52,7 +51,8 @@
         }
         return $countFunctions < $num;
     }
-        function decreaseFunctions(array $allFunctions) {
+
+    function decreaseFunctions(array $allFunctions) {
         $decreasedFunctions = array();
         for($i = 0; $i < count($allFunctions); $i++) {
             if(count(count_chars($allFunctions[$i], 1)) < 7) {
@@ -94,6 +94,7 @@
         return $all_answers;
     }
 
+    session_start();
     if (!isset($_SESSION['last-date'])) $_SESSION['last-date'] = floor(time() / (60*60*24));
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_GET['data'])) {
