@@ -1,5 +1,7 @@
 <?php
     session_start();
+
+    // Comprova si la lletra usa la lletra del mig, si es una funcio o si ja està al array de respostes de l'usuari
     $letters = strtolower(implode($_SESSION['letters']));
     $regex = "/^[". $letters ."]*[" . $letters[3] . "]+[". $letters ."]*$/";
     if (preg_match($regex, $_SESSION['test-word'])) {
@@ -16,5 +18,6 @@
     } else {
         $_SESSION['error_msg'] = "Falta la lletra del mig";
     }
+
     header('Location: ' . $_SESSION['url']);
 ?>

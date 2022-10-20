@@ -1,4 +1,9 @@
-<?php 
+<?php
+    /**
+     * @desc Mira si totes les funcions es cumpleixen, si una no es cumpleix crida a la funcio "generateLetters()"
+     * Seguidament crea l'html amb les etiquetes i classes que pertoquen amb les lletres que hi han al $_SESSION['letters']
+    * @return string - Retorna el codi html resultant de crear l'estructura per les lletres
+    */
     function printLetters(): string {
         if (!isset($_SESSION['letters']) || !isset($_SESSION['date']) || $_SESSION['date'] != $_SESSION['last-date']) generateLetters();
         $letters_html = "";
@@ -9,6 +14,14 @@
         }
         return $letters_html;
     }
+
+    /**
+    * @desc Genera un array de lletres aleatories segons la data de $_SESSION['date'],
+    * fa les comprovacions i les posa a $_SESSION['letters'].
+    * També neteja $_SESSION['correct_answers'] que son les respostes correctes de l'usuari
+    *  i agafa totes les paraules que poden fer-se amb les lletres i les posa a $_SESSION['all_answers']
+    * Finalment posa la $_SESSION['date'] a $_SESSION['last-date'] que era la data anterior
+    */
     function generateLetters() {
         $alphabet = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
         if(!isset($_GET['data'])) {
@@ -37,6 +50,12 @@
         $_SESSION['all_answers'] = getAllAnswers();
     }
 
+    /**
+    * @desc Comprova que les lletres de $_SESSION
+    * @param int $num - el numero minim de funcions que es poden fer amb les lletres
+    * @param array $allFunctions - array amb totes les funcions en les que s'ha de buscar 
+    * @return bool - true si hi han mes de $num opcions, false si no es troben suficients
+    */
     function checkMinimumFunctions(int $num, array $allFunctions ): bool {
         $countFunctions = 0;
         $numAllFunctions = count($allFunctions);
@@ -52,17 +71,26 @@
         return $countFunctions < $num;
     }
 
-    function decreaseFunctions(array $allFunctions) {
+    /**
+    * @desc Agafa l'array de funcions i selecciona només les que tenen 7 caràcters diferents com a màxim
+    * @param array $allFunctions - array amb totes les funcions en les que s'ha de buscar 
+    * @return array - Retorna l'array amb les funcions que tenen menys o 7 caràcters diferents
+    */
+    function decreaseFunctions(array $allFunctions): array {
         $decreasedFunctions = array();
         for($i = 0; $i < count($allFunctions); $i++) {
-            if(count(count_chars($allFunctions[$i], 1)) < 7) {
+            if(count(count_chars($allFunctions[$i], 1)) <= 7) {
                 $decreasedFunctions[] = $allFunctions[$i];
             }
         }
         return $decreasedFunctions;
     }
 
-    function getCountAnswers() {
+    /**
+    * @desc Agafa l'array de $_SESSION['correct_answers'] i compta el respostes de paraules que té
+    * @return int - Retorna el numero de respostes correctes de l'usuari o 0 si no en té
+    */
+    function getCountAnswers(): int {
         if(isset($_SESSION['correct_answers'])) {
             return count($_SESSION['correct_answers']);
         } else {
@@ -70,7 +98,11 @@
         }
     }
 
-    function getCorrectAnswers() {
+    /**
+    * @desc Agafa totes les respostes correctes de l'usuari de $_SESSION['correct_answers'] i les passa a un string
+    * @return string - Retorna l'array de $_SESSION['correct_answers'] separat per comes si o un string en blanc ""
+    */
+    function getCorrectAnswers(): string {
         if(isset($_SESSION['correct_answers'])) {
             return implode(", ", $_SESSION['correct_answers']);
         } else {
@@ -78,6 +110,11 @@
         }
     }
 
+    /**
+    * @desc Agafa totes les funcions que es poden fer amb les lletres de $_SESSION['letters']
+    * sempre incloent la del mig $_SESSION['letters'][3]
+    * @return bool - Retorna un array amb totes les funcions que es poden crear amb les lletres
+    */
     function getAllAnswers() {
         $allFunctions = get_defined_functions();
         $allFunctions = $allFunctions['internal'];
@@ -96,21 +133,27 @@
 
     session_start();
     if (!isset($_SESSION['last-date'])) $_SESSION['last-date'] = floor(time() / (60*60*24));
+
+    // Comprova si han enviat un GET i fa les accions segons el GET fet
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        // Canvia la data segons la que han passat
         if (isset($_GET['data'])) {
             $date = strtotime($_GET['data']);
             $_SESSION['date'] = floor($date / (60*60*24));
         }
+        // Dona totes les respostes possibles a l'usuari
         if (isset($_GET['sol'])) {
             printLetters();
             $_SESSION['correct_answers'] = $_SESSION['all_answers'];
         }
+        // Neteja totes les respostes de l'usuari
         if(isset($_GET['neteja'])) {
             $_SESSION['correct_answers'] = array();
         }
         $_SESSION['url'] = $_SERVER['REQUEST_URI'];
     }
 
+    // Comprova si han enviat un POST
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         //Processar les dades
         $_SESSION['test-word'] = strtolower($_POST['test-word']);
