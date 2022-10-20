@@ -1,31 +1,5 @@
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <title>PHPògic</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Juga al PHPògic.">
-    <link href="//fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-</head>
 <?php 
     session_start();
-    if (!isset($_SESSION['last-date'])) $_SESSION['last-date'] = floor(time() / (60*60*24));
-    if($_SERVER['REQUEST_METHOD'] == 'GET') {
-        if (isset($_GET['data'])) {
-            $date = strtotime($_GET['data']);
-            $_SESSION['date'] = floor($date / (60*60*24));
-        }
-        if (isset($_GET['sol'])) {
-            printLetters();
-            $_SESSION['correct_answers'] = $_SESSION['all_answers'];
-        }
-        if(isset($_GET['neteja'])) {
-            $_SESSION['correct_answers'] = array();
-        }
-        $_SESSION['url'] = $_SERVER['REQUEST_URI'];
-    }
-
     function printLetters(): string {
         if (!isset($_SESSION['letters']) || !isset($_SESSION['date']) || $_SESSION['date'] != $_SESSION['last-date']) generateLetters();
         $letters_html = "";
@@ -119,17 +93,41 @@
         }
         return $all_answers;
     }
-?>
-<body>
-    <?php
+
+    if (!isset($_SESSION['last-date'])) $_SESSION['last-date'] = floor(time() / (60*60*24));
+    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if (isset($_GET['data'])) {
+            $date = strtotime($_GET['data']);
+            $_SESSION['date'] = floor($date / (60*60*24));
+        }
+        if (isset($_GET['sol'])) {
+            printLetters();
+            $_SESSION['correct_answers'] = $_SESSION['all_answers'];
+        }
+        if(isset($_GET['neteja'])) {
+            $_SESSION['correct_answers'] = array();
+        }
+        $_SESSION['url'] = $_SERVER['REQUEST_URI'];
+    }
+
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         //Processar les dades
         $_SESSION['test-word'] = strtolower($_POST['test-word']);
         header('Location: process.php');
     } else {
         //Pintar el formulari
-        
-    ?>
+?>
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <title>PHPògic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juga al PHPògic.">
+    <link href="//fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
 <form action="" method="post" id="myform" name="myform">
     <div class="main">
         <h1>
