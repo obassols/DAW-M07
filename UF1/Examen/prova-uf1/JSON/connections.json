@@ -1,35 +1,5 @@
 [
     {
-        "ip": "192.168.1.8",
-        "user": "aniol@example.com",
-        "time": "2022-10-24 15:27:09",
-        "status": "signup_success"
-    },
-    {
-        "ip": "192.168.1.8",
-        "user": "aniol@example.com",
-        "time": "2022-10-24 15:27:14",
-        "status": "logoff"
-    },
-    {
-        "ip": "192.168.1.9",
-        "user": "aniol@example.com",
-        "time": "2022-10-24 15:27:29",
-        "status": "signin_password_error"
-    },
-    {
-        "ip": "192.168.1.9",
-        "user": "aniol@example.cat",
-        "time": "2022-10-24 15:27:43",
-        "status": "signin_email_error"
-    },
-    {
-        "ip": "192.168.1.8",
-        "user": "aniol@example.com",
-        "time": "2022-10-24 15:27:51",
-        "status": "signin_success"
-    },
-    {
         "ip": "::1",
         "user": "test@test.com",
         "time": "2022-10-24 05:25:36",
