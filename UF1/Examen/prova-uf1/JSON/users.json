@@ -1,0 +1,22 @@
+{
+    "aniol@example.com": {
+        "email": "aniol@example.com",
+        "password": "patata123",
+        "name": "Aniol"
+    },
+    "prova@gmail.com": {
+        "email": "prova@gmail.com",
+        "password": "prova",
+        "name": "prova"
+    },
+    "obassols8@boscdelacoma.cat": {
+        "email": "obassols8@boscdelacoma.cat",
+        "password": "oriolbn20",
+        "name": "Oriol"
+    },
+    "test@test.com": {
+        "email": "test@test.com",
+        "password": "test",
+        "name": "test"
+    }
+}
