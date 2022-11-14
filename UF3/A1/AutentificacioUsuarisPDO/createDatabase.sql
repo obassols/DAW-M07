@@ -1,15 +1,15 @@
-create database dwes_obassols_autpdo;
-create user dwes_user@localhost identified by "dwes_pass";
-grant all privileges on dwes_obassols_autpdo.* to dwes_user@localhost;
+create database `dwes-obassols-autpdo`;
+create user `dwes-user`@localhost identified by "dwes-pass";
+grant all privileges on `dwes-obassols-autpdo`.* to `dwes-user`@localhost;
 
-mysql -u dwes_user -p
-use dwes_obassols_autpdo;
+mysql -u dwes-user -p
+use `dwes-obassols-autpdo`;
 
 create table connections ( 
     ip varchar(20) NOT NULL,
     user varchar(40) NOT NULL,
     time datetime NOT NULL,
-    status varchar(20) NOT NULL,
+    status varchar(30) NOT NULL,
     PRIMARY KEY (ip,user,time)
 );
 

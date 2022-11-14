@@ -87,9 +87,9 @@
     {
         try {
             $hostname = "localhost";
-            $dbname = "dwes_obassols_autpdo";
-            $username = "dwes_user";
-            $pw = "dwes_pass";
+            $dbname = "dwes-obassols-autpdo";
+            $username = "dwes-user";
+            $pw = "dwes-pass";
             $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
         } catch (PDOException $e) {
             echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -111,9 +111,9 @@
     {
         try {
             $hostname = "localhost";
-            $dbname = "dwes_obassols_autpdo";
-            $username = "dwes_user";
-            $pw = "dwes_pass";
+            $dbname = "dwes-obassols-autpdo";
+            $username = "dwes-user";
+            $pw = "dwes-pass";
             $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
         } catch (PDOException $e) {
             echo "Failed to get DB handle: " . $e->getMessage() . "\n";
