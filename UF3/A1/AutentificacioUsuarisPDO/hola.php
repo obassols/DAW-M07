@@ -13,8 +13,8 @@
     function llegeix(string $table) : array
     {
         try {
-            $hostname = "localhost";
-            $dbname = `dwes-obassols-autpdo`;
+            $hostname = "172.24.200.101";
+            $dbname = "dwes-obassols-autpdo";
             $username = "dwes-user";
             $pw = "dwes-pass";
             $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
