@@ -22,6 +22,7 @@
                     escriu($newUsers, "users");
 
                     // Posa l'usuari i el temps a la sessio
+                    $user['password'] = md5($user['password']);
                     $_SESSION['user'] = $user;
                     $_SESSION['time'] = time();
 
@@ -40,7 +41,7 @@
             $users = llegeix("users");
             // Comprova que l'usuari existeixi i que tingui la mateixa contrasenya
             if (in_array( $_POST['email'], array_column($users, "email")) && 
-                array_search(md5($_POST['password']), array_column($users, "password"))) {
+                in_array(md5($_POST['password']), array_column($users, "password"))) {
                 $_SESSION['user'] = $users[array_search($_POST['email'], array_column($users, "email"))];
                 $_SESSION['time'] = time();
                 createConnection($_POST['email'], "correcte");
@@ -86,7 +87,7 @@
     function llegeix(string $table) : array
     {
         try {
-            $hostname = "172.24.200.101";
+            $hostname = "localhost";
             $dbname = "dwes-obassols-autpdo";
             $username = "dwes-user";
             $pw = "dwes-pass";
@@ -110,7 +111,7 @@
     function escriu(array $dades, string $table): void
     {
         try {
-            $hostname = "172.24.200.101";
+            $hostname = "localhost";
             $dbname = "dwes-obassols-autpdo";
             $username = "dwes-user";
             $pw = "dwes-pass";

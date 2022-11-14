@@ -13,7 +13,7 @@
     function llegeix(string $table) : array
     {
         try {
-            $hostname = "172.24.200.101";
+            $hostname = "localhost";
             $dbname = "dwes-obassols-autpdo";
             $username = "dwes-user";
             $pw = "dwes-pass";
@@ -67,7 +67,9 @@
         $user = $_SESSION['user'];
         $users = llegeix("users");
         if (!in_array( $user['email'], array_column($users, "email")) ||
-                !in_array(md5($user['password']), array_column($users, "password"))) {
+                !in_array($user['password'], array_column($users, "password"))) {
+            unset($_SESSION['user']);
+            unset($_SESSION['time']);
             header('Location: index.php');
         } else  {
 ?>
