@@ -14,7 +14,7 @@
     {
         try {
             $hostname = "localhost";
-            $dbname = "dwes-obassols-autpdo";
+            $dbname = `dwes-obassols-autpdo`;
             $username = "dwes-user";
             $pw = "dwes-pass";
             $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
